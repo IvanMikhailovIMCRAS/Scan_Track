@@ -1,4 +1,5 @@
 from scan_track import *
+import os
 
 PALLET = 'NOCSPF'
  
@@ -18,11 +19,34 @@ def print_ent_file(track, bonds, filename):
         dz = abs(track.z[b[0]-1] - track.z[b[1]-1]) 
         if dx < track.box.x/2 and dy < track.box.y/2 and dz < track.box.z/2:  
             file.write(f'CONECT{b[0]:5d}{b[1]:5d}\n')
-    file.close()       
+    file.close()    
+
+# def spt_creation():   
         
 if __name__ == '__main__':
-    path = '/home/imc/Serafim/Triblock_relax_na_06/'
+    path = '/home/imc/Serafim/Movie_test/'
     track = ReadTrack(path)
     bonds = read_bonds(path)
+    list_ent=list()
     while track.one_step():
-        print_ent_file(track, bonds, f'picture{track.time_step:012d}.ent')
+        line = f'picture_{track.time_step:012d}.ent'
+        list_ent.append(line)
+        print_ent_file(track, bonds, line)
+    script_spt = open('script.spt', 'w') 
+    for name_ent in list_ent:
+        script_spt.write(f'load FILES {name_ent};\n')
+        script_spt.write('background white  ;\n')
+        script_spt.write('set window 700 700; \n')
+        script_spt.write('select oxygen;\n')
+        script_spt.write('spacefill 0.0;\n')
+        script_spt.write('wireframe 0.2;\n')
+        script_spt.write('set scale3d 4.8;\n')
+        script_spt.write('select nitrogen;\n')
+        script_spt.write('spacefill 0.5; \n')
+        script_spt.write(f'write JPG {name_ent[:-4]}.jpg;\n')
+    script_spt.write('exitjmol\n')
+    script_spt.close()
+    os.system(command='java -jar /usr/share/java/Jmol.jar -s script.spt')
+    os.system(command='rm *.ent')
+    # os.system(command=r'ffmpeg -r 10 -i .jpg -b 300000k  -y test.avi')
+    # os.system(command='rm *.jpg')
