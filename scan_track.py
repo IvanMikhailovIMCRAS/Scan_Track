@@ -51,10 +51,27 @@ class ReadTrack():
             return True
         except:
             self.file_track.close()
-            return False         
-            
+            return False  
+               
+def read_bonds(path):
+    path = os.path.join(path, 'BONDS')
+    bonds = list()
+    try:
+        file_bonds = open(path, 'r')
+        title = file_bonds.readline().split()
+        num_bonds = int(title[1])
+        for _ in range(num_bonds):
+            bonds.append(list(map(int, file_bonds.readline().split())))  
+        file_bonds.close()   
+    except:
+        loging = open('Warning.log', 'w')
+        loging.write('File BONDS was not read')   
+        loging.close()  
+    return bonds     
+                
 if __name__ == '__main__':
     RT = ReadTrack('/home/imc/Serafim/Triblock_relax_na_06/') 
     while RT.one_step():
         print(RT.time_step)
+    read_bonds('/home/imc/Serafim/Triblock_re_06/')
     
