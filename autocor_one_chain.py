@@ -8,13 +8,19 @@ if __name__ == '__main__':
     bonds = read_bonds(path)
     R2 = []
     t = []
-    os.system(command='rm *.ent')
     while track.one_step():
-        dx = track.x[0]- track.x[-1]
-        dy = track.y[0]- track.y[-1]
-        dz = track.z[0]- track.z[-1]
-        dx, dy, dz = track.box.periodic_correct(dx, dy, dz)
-        R2.append(dx**2 + dy**2 + dz**2)
+        x = 0.0
+        y = 0.0
+        z = 0.0
+        for b in bonds:
+            dx = track.x[b[1]-1]- track.x[b[0]-1]
+            dy = track.y[b[1]-1]- track.y[b[0]-1]
+            dz = track.z[b[1]-1]- track.z[b[0]-1]
+            dx, dy, dz = track.box.periodic_correct(dx, dy, dz)
+            x += dx
+            y += dy
+            z += dz
+        R2.append(x**2 + y**2 + z**2)
         t.append(track.time_step)
 
     R2 = np.array(R2)
