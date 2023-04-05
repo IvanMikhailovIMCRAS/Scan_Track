@@ -9,6 +9,7 @@ packages = [{include = "scan_track"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 numpy = "^1.24.2"
+matplotlib = "^3.7.1"
 
 
 [build-system]
