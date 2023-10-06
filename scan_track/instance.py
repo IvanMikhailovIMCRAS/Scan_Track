@@ -1,6 +1,6 @@
 import numpy as np
-from .clusterization import neighbourhood
 
+from .clusterization import neighbourhood
 from .scan_track import ReadTrack
 
 RT = ReadTrack("trajectory_sample")

@@ -1,8 +1,8 @@
 import time
 
 import numpy as np
-from .periodic_box import Box
 
+from .periodic_box import Box
 from .scan_track import ReadTrack
 
 

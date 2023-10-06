@@ -2,6 +2,7 @@
 from typing import Any, Dict, Final, List, Tuple
 
 import numpy as np
+
 from .attached_list import *
 from .periodic_box import Box
 
@@ -15,14 +16,14 @@ def neighbourhood(
     *coords: np.ndarray, radius: float, box: Box
 ) -> List[Tuple[int, int]]:
     """
-    Return list of neighboring beads
-    input:
-    radius - minimal distance between neighboring beads
-    *coords - coordinates of beads
-    output:
-    bonds: List[int]import sys
+        Return list of neighboring beads
+        input:
+        radius - minimal distance between neighboring beads
+        *coords - coordinates of beads
+        output:
+        bonds: List[int]import sys
 
-sys.path.append("./")
+    sys.path.append("./")
     """
     bonds = []
     if len(set([len(coord) for coord in coords])) != 1:

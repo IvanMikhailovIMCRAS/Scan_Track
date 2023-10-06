@@ -1,6 +1,7 @@
 import os
 
 import numpy as np
+
 from .periodic_box import Box
 
 
