@@ -37,7 +37,7 @@ class Latties:
             index = k[0] ** 2 + k[1] ** 2 + k[2] ** 2
             sf[index] = sf[index] + [sk]
         for s in sf:
-            sf[s] = np.array(sf[s]).mean / len(x)
+            sf[s] = np.mean(np.array(sf[s]))
         return sf
 
 
@@ -47,3 +47,4 @@ if __name__ == "__main__":
     y = np.array([1, 2, 3])
     z = np.array([1, 2, 3])
     d = L.structure_factor(x, y, z)
+    print(d)
