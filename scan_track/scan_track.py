@@ -1,23 +1,24 @@
 import os
+
 import numpy as np
-from periodic_box import Box
+from .periodic_box import Box
 
 
-class ReadTrack():
-    def __init__(self, path=''):
-        self.path = os.path.join(path, 'TRACK')
+class ReadTrack:
+    def __init__(self, path=""):
+        self.path = os.path.join(path, "TRACK")
         self.time_step = 0
         try:
-            self.file_track = open(self.path, 'r')
+            self.file_track = open(self.path, "r")
         except:
-            raise FileNotFoundError(f'{str(self.path)} is not found')
+            raise FileNotFoundError(f"{str(self.path)} is not found")
         try:
             title = self.file_track.readline().split()
             self.num_atoms = int(title[1])
             self.box = Box(float(title[3]), float(title[4]), float(title[5]))
         except:
             self.file_track.close()
-            raise FileNotFoundError(f'{str(self.path)} is not correct')
+            raise FileNotFoundError(f"{str(self.path)} is not correct")
         self.x = np.zeros(self.num_atoms, dtype=float)
         self.y = np.zeros(self.num_atoms, dtype=float)
         self.z = np.zeros(self.num_atoms, dtype=float)
@@ -39,25 +40,26 @@ class ReadTrack():
             self.file_track.close()
             return False
 
+
 def read_bonds(path):
-    path = os.path.join(path, 'BONDS')
+    path = os.path.join(path, "BONDS")
     bonds = list()
     try:
-        file_bonds = open(path, 'r')
+        file_bonds = open(path, "r")
         title = file_bonds.readline().split()
         num_bonds = int(title[1])
         for _ in range(num_bonds):
             bonds.append(list(map(int, file_bonds.readline().split())))
         file_bonds.close()
     except:
-        loging = open('Warning.log', 'w')
-        loging.write('File BONDS was not read')
+        loging = open("Warning.log", "w")
+        loging.write("File BONDS was not read")
         loging.close()
     return bonds
 
 
-if __name__ == '__main__':
-    RT = ReadTrack('trajectory_sample')
+if __name__ == "__main__":
+    RT = ReadTrack("trajectory_sample")
     while RT.one_step():
         print(RT.time_step)
         x, y, z = [], [], []
@@ -67,6 +69,5 @@ if __name__ == '__main__':
                 y.append(RT.y[i])
                 z.append(RT.z[i])
         x, y, z = np.array(x), np.array(y), np.array(z)
-        
-    read_bonds('trajectory_sample')
-    
+
+    read_bonds("trajectory_sample")

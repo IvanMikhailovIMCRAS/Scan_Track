@@ -1,9 +1,9 @@
-from scan_track import ReadTrack
 import numpy as np
-from clusterization import stratification, neighbourhood, neighbourhood2
-from periodic_box import Box
+from .clusterization import neighbourhood
 
-RT = ReadTrack('trajectory_sample')
+from .scan_track import ReadTrack
+
+RT = ReadTrack("trajectory_sample")
 while RT.one_step():
     print(RT.time_step)
     x, y, z = [], [], []
@@ -18,6 +18,3 @@ while RT.one_step():
     # bonds2 = neighbourhood2(x, y, z, radius=1, box=RT.box)
     # clusters = stratification(len(x), bonds)
     # print(len(bonds2))
-    
-        
-    
